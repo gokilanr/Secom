@@ -3,6 +3,8 @@ pandas
 numpy
 scikit-learn
 scikit-optimize
-isolationforest
 xgboost
 lightgbm
+imblearn
+seaborn
+matplotlib
