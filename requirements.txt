@@ -8,3 +8,4 @@ lightgbm
 imblearn
 seaborn
 matplotlib
+joblib
