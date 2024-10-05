@@ -81,14 +81,6 @@
 # example and the features seperated by spaces. The null values are represented by
 # the 'NaN' value as per MatLab.
 
-# In[1]:
-
-
-get_ipython().system('pip install scikit-optimize')
-
-
-# In[2]:
-
 
 # Required Libraries
 import pandas as pd
