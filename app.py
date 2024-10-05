@@ -3,32 +3,33 @@ import pandas as pd
 import joblib
 from sklearn.preprocessing import StandardScaler
 
-# Load the saved model
-model = joblib.load('xgboost_model.pkl')
 
-# Load or create a StandardScaler for consistent preprocessing (if used)
-scaler = StandardScaler()
 
-# Define a function to make predictions
 
-def predict_anomaly(input_data):
-    input_df = pd.DataFrame(input_data, index=[0])
+import pickle
 
-    # Load the saved scaler and model
-    scaler = joblib.load('scaler_filename.pkl')
-    model = joblib.load('xgboost_model.pkl')
+# Loading the saved model
+with open('xgboost_model.pkl', 'rb') as pickle_in:
+    xgb_classifier = pickle.load(pickle_in)
 
-    # Transform the input data using the fitted scaler
-    input_df_scaled = scaler.transform(input_df)
 
-    # Predict anomaly using the loaded model
-    prediction = model.predict(input_df_scaled)
-    
-    return prediction
 
+import joblib
+import pandas as pd
+
+# Load the model once when the app starts
+@st.cache_resource
+def load_model():
+    with open(r'D:\seom1\xgboost_model.pkl', 'rb') as pickle_in:
+        model = pickle.load(pickle_in)
+    return model
+
+# Load the model
+xgb_classifier = load_model()
 
 # Streamlit App Interface
 st.title("Anomaly Detection Web App")
+
 
 st.write("""
 ### Input your sensor data to check for anomalies
