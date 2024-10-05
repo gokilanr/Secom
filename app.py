@@ -14,16 +14,16 @@ def load_model():
     return model
 
 # Cache the scaler loading process
-@st.cache_resource
-def load_scaler():
+#@st.cache_resource
+#def load_scaler():
     # Load the pre-trained scaler
-    with open('scaler_filename.pkl', 'rb') as scaler_file:
-        scaler = pickle.load(scaler_file)
-    return scaler
+    #with open('scaler_filename.pkl', 'rb') as scaler_file:
+        #scaler = pickle.load(scaler_file)
+    #return scaler
 
 # Load model and scaler using cached functions
 xgb_classifier = load_model()
-scaler = load_scaler()
+#scaler = load_scaler()
 
 # Function to predict anomalies using the loaded model and scaler
 def predict_anomaly(input_data):
@@ -31,10 +31,10 @@ def predict_anomaly(input_data):
     input_df = pd.DataFrame(input_data, index=[0])
 
     # Scale the input data using the loaded scaler
-    input_df_scaled = scaler.transform(input_df)
+    #input_df_scaled = scaler.transform(input_df)
 
     # Predict anomalies using the loaded XGBoost model
-    prediction = xgb_classifier.predict(input_df_scaled)
+    prediction = xgb_classifier.predict(input_df)
 
     return prediction
 
