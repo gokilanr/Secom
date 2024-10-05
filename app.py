@@ -2,30 +2,41 @@ import streamlit as st
 import pandas as pd
 import joblib
 from sklearn.preprocessing import StandardScaler
-
-
-
-
 import pickle
 
-# Loading the saved model
-with open('xgboost_model.pkl', 'rb') as pickle_in:
-    xgb_classifier = pickle.load(pickle_in)
 
-
-
-import joblib
-import pandas as pd
-
-# Load the model once when the app starts
+# Cache the model loading process
 @st.cache_resource
 def load_model():
-    with open(r'xgboost_model.pkl', 'rb') as pickle_in:
-        model = pickle.load(pickle_in)
+    # Load the pre-trained XGBoost model
+    with open('xgboost_model.pkl', 'rb') as model_file:
+        model = pickle.load(model_file)
     return model
 
-# Load the model
+# Cache the scaler loading process
+@st.cache_resource
+def load_scaler():
+    # Load the pre-trained scaler
+    with open('scaler_filename.pkl', 'rb') as scaler_file:
+        scaler = pickle.load(scaler_file)
+    return scaler
+
+# Load model and scaler using cached functions
 xgb_classifier = load_model()
+scaler = load_scaler()
+
+# Function to predict anomalies using the loaded model and scaler
+def predict_anomaly(input_data):
+    # Convert input data to a DataFrame
+    input_df = pd.DataFrame(input_data, index=[0])
+
+    # Scale the input data using the loaded scaler
+    input_df_scaled = scaler.transform(input_df)
+
+    # Predict anomalies using the loaded XGBoost model
+    prediction = xgb_classifier.predict(input_df_scaled)
+
+    return prediction
 
 # Streamlit App Interface
 st.title("Anomaly Detection Web App")
