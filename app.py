@@ -20,7 +20,7 @@ import pandas as pd
 # Load the model once when the app starts
 @st.cache_resource
 def load_model():
-    with open(r'D:\seom1\xgboost_model.pkl', 'rb') as pickle_in:
+    with open(r'xgboost_model.pkl', 'rb') as pickle_in:
         model = pickle.load(pickle_in)
     return model
 
